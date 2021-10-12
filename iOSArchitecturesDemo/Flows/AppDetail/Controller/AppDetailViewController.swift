@@ -13,6 +13,7 @@ final class AppDetailViewController: UIViewController {
     public var app: ITunesApp
     
     lazy var headerViewController = AppDetailHeaderViewController(app: app)
+    lazy var whatsNewViewController = AppDetailWhatsNewViewController(app: app)
     
     private let imageDownloader = ImageDownloader()
     
@@ -53,7 +54,7 @@ final class AppDetailViewController: UIViewController {
         view.backgroundColor = .white
         
         addHeaderViewController()
-        addDescriptionViewController()
+        addWhatsNewViewController()
     }
     
     private func addHeaderViewController() {
@@ -70,22 +71,17 @@ final class AppDetailViewController: UIViewController {
         ])
     }
     
-    private func addDescriptionViewController() {
-        //ДЗ добавить другие модули
+    private func addWhatsNewViewController() {
+        self.addChild(whatsNewViewController)
+        self.view.addSubview(whatsNewViewController.view)
+        whatsNewViewController.didMove(toParent: self)
         
-        let descriptionController = UIViewController()
-        
-        self.addChild(descriptionController)
-        self.view.addSubview(descriptionController.view)
-        
-        descriptionController.didMove(toParent: self)
-        
-        descriptionController.view.translatesAutoresizingMaskIntoConstraints = false
+        whatsNewViewController.view.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            descriptionController.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            descriptionController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
-            descriptionController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
+            whatsNewViewController.view.topAnchor.constraint(equalTo: self.headerViewController.view.safeAreaLayoutGuide.bottomAnchor),
+            whatsNewViewController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
+            whatsNewViewController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
         ])
     }
 
