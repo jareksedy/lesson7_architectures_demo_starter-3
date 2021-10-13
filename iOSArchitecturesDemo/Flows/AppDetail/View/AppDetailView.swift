@@ -13,7 +13,7 @@ final class AppDetailView: UIView {
     // MARK: - Subviews
     
     let imageView = UIImageView()
-    let throbber = UIActivityIndicatorView(style: .gray)
+    let throbber = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
     
     // MARK: - Init
     
