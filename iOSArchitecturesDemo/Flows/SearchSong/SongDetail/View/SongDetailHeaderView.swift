@@ -77,8 +77,8 @@ class SongDetailHeaderView: UIView {
             albumLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor, constant: 16),
             albumLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
             
-            artistLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 24),
-            artistLabel.leftAnchor.constraint(equalTo: imageView.leftAnchor),
+            artistLabel.topAnchor.constraint(equalTo: albumLabel.bottomAnchor, constant: 24),
+            artistLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor, constant: 16),
             artistLabel.widthAnchor.constraint(equalToConstant: 100),
             artistLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
