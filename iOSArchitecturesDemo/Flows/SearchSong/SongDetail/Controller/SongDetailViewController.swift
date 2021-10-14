@@ -1,30 +1,29 @@
 //
-//  AppDetailViewController.swift
+//  SongDetailViewController.swift
 //  iOSArchitecturesDemo
 //
-//  Created by ekireev on 20.02.2018.
-//  Copyright © 2018 ekireev. All rights reserved.
+//  Created by Ярослав on 14.10.2021.
+//  Copyright © 2021 ekireev. All rights reserved.
 //
 
 import UIKit
 
-final class AppDetailViewController: UIViewController {
+final class SongDetailViewController: UIViewController {
     
-    public var app: ITunesApp
+    public var song: ITunesSong
     
-    lazy var headerViewController = AppDetailHeaderViewController(app: app)
-    lazy var whatsNewViewController = AppDetailWhatsNewViewController(app: app)
+    lazy var headerViewController = SongDetailHeaderViewController(song: song)
     
     private let imageDownloader = ImageDownloader()
     
-    private var appDetailView: AppDetailView {
-        return self.view as! AppDetailView
+    private var songDetailView: SongDetailView {
+        return self.view as! SongDetailView
     }
     
     // MARK: - Lifecycle
     
-    init(app: ITunesApp) {
-        self.app = app
+    init(song: ITunesSong) {
+        self.song = song
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -54,7 +53,6 @@ final class AppDetailViewController: UIViewController {
         view.backgroundColor = .white
         
         addHeaderViewController()
-        addWhatsNewViewController()
     }
     
     private func addHeaderViewController() {
@@ -68,20 +66,6 @@ final class AppDetailViewController: UIViewController {
             headerViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             headerViewController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
             headerViewController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
-        ])
-    }
-    
-    private func addWhatsNewViewController() {
-        self.addChild(whatsNewViewController)
-        self.view.addSubview(whatsNewViewController.view)
-        whatsNewViewController.didMove(toParent: self)
-        
-        whatsNewViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            whatsNewViewController.view.topAnchor.constraint(equalTo: self.headerViewController.view.safeAreaLayoutGuide.bottomAnchor),
-            whatsNewViewController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
-            whatsNewViewController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
         ])
     }
 
