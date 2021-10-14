@@ -19,7 +19,7 @@ final class SearchSongViewController: UIViewController {
     private let presenter: SearchSongViewOutput
     
     private let searchService = ITunesSearchService()
-    public var searchResults = [ITunesApp]() {
+    public var searchResults = [ITunesSong]() {
         didSet {
             searchSongView.tableView.isHidden = false
             searchSongView.tableView.reloadData()
@@ -52,7 +52,7 @@ final class SearchSongViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.searchSongView.searchBar.delegate = self
-        self.searchSongView.tableView.register(AppCell.self, forCellReuseIdentifier: Constants.reuseIdentifier)
+        self.searchSongView.tableView.register(SongCell.self, forCellReuseIdentifier: Constants.reuseIdentifier)
         self.searchSongView.tableView.delegate = self
         self.searchSongView.tableView.dataSource = self
     }
@@ -105,11 +105,11 @@ extension SearchSongViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dequeuedCell = tableView.dequeueReusableCell(withIdentifier: Constants.reuseIdentifier, for: indexPath)
-        guard let cell = dequeuedCell as? AppCell else {
+        guard let cell = dequeuedCell as? SongCell else {
             return dequeuedCell
         }
-        let app = self.searchResults[indexPath.row]
-        let cellModel = AppCellModelFactory.cellModel(from: app)
+        let song = self.searchResults[indexPath.row]
+        let cellModel = SongCellModelFactory.cellModel(from: song)
         cell.configure(with: cellModel)
         return cell
     }
@@ -120,11 +120,11 @@ extension SearchSongViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let app = searchResults[indexPath.row]
-        let appDetaillViewController = AppDetailViewController(app: app)
-        appDetaillViewController.app = app
+        let song = searchResults[indexPath.row]
+        let songDetaillViewController = SongDetailViewController(song: song)
+        songDetaillViewController.song = song
 //        navigationController?.pushViewController(appDetaillViewController, animated: true)
-        presenter.viewDidSelectApp(app: app)
+        presenter.viewDidSelectSong(song: song)
     }
 }
 

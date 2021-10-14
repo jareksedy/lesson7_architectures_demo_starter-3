@@ -27,7 +27,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
         
 
-        let tabTwo = SearchBuilder.build()
+        let tabTwo = SearchSongBuilder.build()
         let tabTwoBarItem2 = UITabBarItem(title: "Songs",
                                           image: UIImage(systemName: "music.mic.circle"),
                                           selectedImage: UIImage(systemName: "music.mic.circle.fill"))
