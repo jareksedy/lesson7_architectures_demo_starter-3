@@ -24,11 +24,25 @@ protocol SearchViewOutput: AnyObject {
 
 class SearchPresenter {
     weak var viewInput: (UIViewController & SearchViewInput)?
+    let interactor: SearchInteractorInput
+    let router: SearchRouterInput
     private let searchService = ITunesSearchService()
     
+    init(interactor: SearchInteractorInput, router: SearchRouterInput) {
+        self.interactor = interactor
+        self.router = router
+    }
     
-    private func requestApps(with query: String) {
-        self.searchService.getApps(forQuery: query) { [weak self] result in
+    private func openAppDetails(with app: ITunesApp) {
+        let appDetailViewController = AppDetailViewController(app: app)
+        viewInput?.navigationController?.pushViewController(appDetailViewController, animated: true)
+    }
+}
+
+extension SearchPresenter: SearchViewOutput {
+    func viewDidSearch(with query: String) {
+        viewInput?.throbber(show: true)
+        interactor.requestApps(with: query) { [weak self] result in
             guard let self = self else { return }
             self.viewInput?.throbber(show: false)
             result
@@ -46,21 +60,7 @@ class SearchPresenter {
         }
     }
     
-    private func openAppDetails(with app: ITunesApp) {
-        let appDetailViewController = AppDetailViewController(app: app)
-        viewInput?.navigationController?.pushViewController(appDetailViewController, animated: true)
-    }
-}
-
-extension SearchPresenter: SearchViewOutput {
-    func viewDidSearch(with query: String) {
-        viewInput?.throbber(show: true)
-        requestApps(with: query)
-    }
-    
     func viewDidSelectApp(app: ITunesApp) {
         openAppDetails(with: app)
     }
-    
-    
 }
